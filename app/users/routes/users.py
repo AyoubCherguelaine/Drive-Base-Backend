@@ -21,7 +21,8 @@ def user(id):
     if request.method == 'DELETE':
         return endpoint.delete_user(id)
     elif request.method == 'PUT':
-        return endpoint.update_user(id)
+        data = request.json
+        return endpoint.update_user(id,data)
     elif request.method == 'GET':
         return endpoint.get_user(id)
     else:

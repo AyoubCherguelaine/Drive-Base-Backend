@@ -8,7 +8,7 @@ class endpoint:
         required_keys = {'firstname', 'lastname', 'username', 'email', 'password'}
         if create and set(data.keys()) == required_keys:
             return True
-        elif not create and required_keys.issubset(data.keys()):
+        elif not create and set(data.keys()) & required_keys:
             return True
         else:
             return False
@@ -24,7 +24,7 @@ class endpoint:
             try:
                 db.session.add(user)
                 db.session.commit()
-                return jsonify(user)
+                return jsonify(user.json())
             except Exception as e:
                 abort(500,e)
         else:
@@ -44,9 +44,9 @@ class endpoint:
     @staticmethod
     def update_user(id: str,data):
         user = User.query.first_or_404(id)
-        if endpoint.check_user_data(user):
+        if endpoint.check_user_data(data):
             for key in list(data.keys()):
-                user[key] = data[key]
+                setattr(user, key, data[key])
             try:
                 db.session.commit()
                 return jsonify(user.json())
@@ -61,6 +61,6 @@ class endpoint:
         try:
             db.session.delete(user)
             db.session.commit()
-            return True
+            return {"result":True}
         except Exception as e : 
             abort(500,e.message)
