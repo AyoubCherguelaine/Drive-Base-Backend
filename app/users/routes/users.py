@@ -2,15 +2,16 @@ from flask import Flask, request, jsonify, abort,Blueprint
 
 from ..controllers.users import endpoint
 
+
 users_routes = Blueprint('user', __name__)
 
 @users_routes.route('/',methods=['GET','POST'])
 def users():
     if request.method == 'POST':
         data = request.json
-        return endpoint.create_user(data)
+        return endpoint.create(data)
     elif request.method == 'GET':
-        return endpoint.get_users()
+        return endpoint.get_list(None)
     else:
         abort(404,{"Not Implemented"})
 
@@ -19,11 +20,11 @@ def users():
 def user(id):
     
     if request.method == 'DELETE':
-        return endpoint.delete_user(id)
+        return endpoint.delete(id)
     elif request.method == 'PUT':
         data = request.json
-        return endpoint.update_user(id,data)
+        return endpoint.update(id,data)
     elif request.method == 'GET':
-        return endpoint.get_user(id)
+        return endpoint.get(id)
     else:
         abort(404,{"Not Implemented"})

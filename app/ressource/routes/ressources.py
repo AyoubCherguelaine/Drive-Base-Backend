@@ -9,9 +9,9 @@ ressources_routes = Blueprint('ressources', __name__)
 def ressources():
     if request.method == 'POST':
         data = request.json
-        return ress_endpoint.create_ressource(data)
+        return ress_endpoint.create(data)
     elif request.method == 'GET':
-        return ress_endpoint.get_ressources()
+        return ress_endpoint.get_list()
     else:
         abort(404,{"Not Implemented"})
 
@@ -20,36 +20,36 @@ def ressources():
 def ressource(id):
     
     if request.method == 'DELETE':
-        return ress_endpoint.delete_ressource(id)
+        return ress_endpoint.delete(id)
     elif request.method == 'PUT':
         data = request.json
-        return ress_endpoint.update_ressource(id,data)
+        return ress_endpoint.update(id,data)
     elif request.method == 'GET':
-        return ress_endpoint.get_ressource(id)
+        return ress_endpoint.get(id)
     else:
         abort(404,{"Not Implemented"})
         
         
-@ressources_routes.route('/<int:id>/user',methods=['GET','POST'])
-def list_user_access():
+@ressources_routes.route('/<int:id>/user/',methods=['GET','POST'])
+def list_user_access(id):
     if request.method == 'POST':
         data = request.json
-        return ua_endpoint.create_user_access(data)
+        return ua_endpoint.create(data)
     elif request.method == 'GET':
-        return ua_endpoint.get_list_user_access()
+        return ua_endpoint.get_list()
     else:
         abort(404,{"Not Implemented"})
 
 
 @ressources_routes.route('/<int:id>/user/<int:id_user>', methods=['GET','DELETE', 'PUT'] )
-def user_access(id):
+def user_access(id,id_user):
     
     if request.method == 'DELETE':
-        return ua_endpoint.delete_user_access(id)
+        return ua_endpoint.delete(id)
     elif request.method == 'PUT':
         data = request.json
-        return ua_endpoint.update_user_access(id,data)
+        return ua_endpoint.update(id,data)
     elif request.method == 'GET':
-        return ua_endpoint.get_user_access(id)
+        return ua_endpoint.get(id)
     else:
         abort(404,{"Not Implemented"})

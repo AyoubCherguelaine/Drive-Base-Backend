@@ -8,9 +8,9 @@ access_routes = Blueprint('access', __name__)
 def list_access():
     if request.method == 'POST':
         data = request.json
-        return endpoint.create_access(data)
+        return endpoint.create(data)
     elif request.method == 'GET':
-        return endpoint.get_list_access()
+        return endpoint.get_list()
     else:
         abort(404,{"Not Implemented"})
 
@@ -19,11 +19,11 @@ def list_access():
 def access(id):
     
     if request.method == 'DELETE':
-        return endpoint.delete_access(id)
+        return endpoint.delete(id)
     elif request.method == 'PUT':
         data = request.json
-        return endpoint.update_access(id,data)
+        return endpoint.update(id,data)
     elif request.method == 'GET':
-        return endpoint.get_access(id)
+        return endpoint.get(id)
     else:
         abort(404,{"Not Implemented"})

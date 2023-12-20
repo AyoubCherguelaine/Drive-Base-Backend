@@ -1,21 +1,14 @@
 from app import db
+from app.base.endpoint import endpoint
 from ..models.users import User
 from flask import request, jsonify, abort
 
-class endpoint:
-    @staticmethod
-    def check_user_data(data, create=False)->bool:
-        required_keys = {'firstname', 'lastname', 'username', 'email', 'password'}
-        if create and set(data.keys()) == required_keys:
-            return True
-        elif not create and set(data.keys()) & required_keys:
-            return True
-        else:
-            return False
+class endpoint(endpoint):
+    body_data_keys =  {'firstname', 'lastname', 'username', 'email', 'password'}
         
     @staticmethod
-    def create_user(data):
-        if endpoint.check_user_data(data, create=True):
+    def create(data):
+        if endpoint.is_body_data_valide(data,endpoint.body_data_keys, create=True):
             user = User(firstname=data['firstname'], 
                         lastname=data['lastname'],
                         username=data['username'],
@@ -31,20 +24,20 @@ class endpoint:
             abort(400, {"message": "Invalid user data" })
     
     @staticmethod
-    def get_users():
+    def get_list(query=None):
         users = User.query.order_by(User.id).all()
         users_list = [user.json() for user in users]
         return jsonify(users_list)
 
     @staticmethod
-    def get_user(id: str):
+    def get(id: str):
         user = User.query.first_or_404(id)
         return jsonify(user.json())
 
     @staticmethod
-    def update_user(id: str,data):
+    def update(id: str,data):
         user = User.query.first_or_404(id)
-        if endpoint.check_user_data(data):
+        if endpoint.is_body_data_valide(data,endpoint.body_data_keys):
             for key in list(data.keys()):
                 setattr(user, key, data[key])
             try:
@@ -56,7 +49,7 @@ class endpoint:
             abort(400,{"Invalid user data"})
 
     @staticmethod       
-    def delete_user(id):
+    def delete(id):
         user = User.query.first_or_404(id)
         try:
             db.session.delete(user)
