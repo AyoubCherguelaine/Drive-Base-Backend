@@ -11,13 +11,13 @@ def create_app(config_class=Config):
     
     #modules 
     from app.users.routes.users import users_routes
-    from app.ressource.routes.access import access_routes
-    from app.ressource.routes.ressources import ressources_routes
+    from app.resource.routes.access import access_routes
+    from app.resource.routes.resources import resources_routes
     
     
     app.register_blueprint(users_routes, url_prefix='/users')
     app.register_blueprint(access_routes, url_prefix='/access')
-    app.register_blueprint(ressources_routes, url_prefix='/ressources')
+    app.register_blueprint(resources_routes, url_prefix='/resources')
     
     @app.route('/endpoint/', methods=['GET'])
     def endpoints():

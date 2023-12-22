@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify, abort,Blueprint
 
-from ..controllers.ressources import endpoint as ress_endpoint
+from ..controllers.resources import endpoint as ress_endpoint
 from ..controllers.user_access import endpoint as ua_endpoint
 
-ressources_routes = Blueprint('ressources', __name__)
+resources_routes = Blueprint('resources', __name__)
 
-@ressources_routes.route('/',methods=['GET','POST'])
-def ressources():
+@resources_routes.route('/',methods=['GET','POST'])
+def resources():
     if request.method == 'POST':
         data = request.json
         return ress_endpoint.create(data)
@@ -16,8 +16,8 @@ def ressources():
         abort(404,{"Not Implemented"})
 
 
-@ressources_routes.route('/<int:id>', methods=['GET','DELETE', 'PUT'] )
-def ressource(id):
+@resources_routes.route('/<int:id>', methods=['GET','DELETE', 'PUT'] )
+def resource(id):
     
     if request.method == 'DELETE':
         return ress_endpoint.delete(id)
@@ -31,7 +31,7 @@ def ressource(id):
         
 
 
-@ressources_routes.route('/user/',methods=['GET','POST'])
+@resources_routes.route('/user/',methods=['GET','POST'])
 def list_user_access():
     if request.method == 'POST':
         data = request.json
@@ -42,7 +42,7 @@ def list_user_access():
         abort(404,{"Not Implemented"})
         
         
-@ressources_routes.route('/user/<int:id_user>', methods=['GET','DELETE', 'PUT'] )
+@resources_routes.route('/user/<int:id_user>', methods=['GET','DELETE', 'PUT'] )
 def user_access(id_user):
     
     if request.method == 'DELETE':
@@ -56,8 +56,8 @@ def user_access(id_user):
         abort(404,{"Not Implemented"})
         
         
-@ressources_routes.route('/<int:id>/user/',methods=['GET','POST'])
-def list_user_access_by_ressource(id):
+@resources_routes.route('/<int:id>/user/',methods=['GET','POST'])
+def list_user_access_by_resource(id):
     if request.method == 'POST':
         data = request.json
         return ua_endpoint.create(data)
@@ -67,8 +67,8 @@ def list_user_access_by_ressource(id):
         abort(404,{"Not Implemented"})
 
 
-@ressources_routes.route('/<int:id>/user/<int:id_user>', methods=['GET','DELETE', 'PUT'] )
-def user_access_by_ressource(id,id_user):
+@resources_routes.route('/<int:id>/user/<int:id_user>', methods=['GET','DELETE', 'PUT'] )
+def user_access_by_resource(id,id_user):
     
     if request.method == 'DELETE':
         return ua_endpoint.delete(id)

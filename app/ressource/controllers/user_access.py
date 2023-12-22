@@ -3,7 +3,7 @@ from ..models.user_access import user_access as User_access_model
 from flask import request, jsonify, abort
 from app.base.endpoint import endpoint
 class endpoint(endpoint):
-    body_data_keys = {"user_id","ressource_id","access_id"}
+    body_data_keys = {"user_id","resource_id","access_id"}
 
     
     @staticmethod
@@ -15,7 +15,7 @@ class endpoint(endpoint):
         if endpoint.is_body_data_valide(data,endpoint.body_data_keys, create = True):
             user_access = User_access_model(
                 user_id=data['user_id'],
-                ressource_id=data['ressource_id'],
+                resource_id=data['resource_id'],
                 access_id=data['access_id']
             )
             try:

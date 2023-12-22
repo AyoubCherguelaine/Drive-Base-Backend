@@ -1,1 +1,1 @@
-from . import access, ressources
+from . import access, resources
