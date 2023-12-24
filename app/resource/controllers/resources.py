@@ -1,5 +1,5 @@
 from app import db
-from ..models import resource
+from ..models import resources
 from flask import request, jsonify, abort
 from app.base.endpoint import endpoint
 
