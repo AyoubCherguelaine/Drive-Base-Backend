@@ -37,7 +37,7 @@ def list_user_access():
         data = request.json
         return ua_endpoint.create(data)
     elif request.method == 'GET':
-        return ua_endpoint.get_list()
+        return ua_endpoint.get_list(None)
     else:
         abort(404,{"Not Implemented"})
         
