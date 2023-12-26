@@ -18,7 +18,6 @@ def resources():
 
 @resources_routes.route('/<int:id>', methods=['GET','DELETE', 'PUT'] )
 def resource(id):
-    
     if request.method == 'DELETE':
         return ress_endpoint.delete(id)
     elif request.method == 'PUT':

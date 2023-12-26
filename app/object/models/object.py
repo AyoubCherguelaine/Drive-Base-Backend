@@ -7,8 +7,18 @@ class object(db.Model):
     resource_id = db.Column(db.ForeignKey("resources.id"), nullable=False)
     path = db.Column(db.String(1000))
     
+    resource = db.relationship("resource", lazy='joined', foreign_keys=[resource_id])
+    
+    
     def __repr__(self) -> str:
         return "<object %r" % self.id
+    
+    def json_populate(self):
+        return {
+            "id": self.id,
+            "resource": self.resource.json(),
+            "path": self.path
+        }
     
     def json(self):
         return {
