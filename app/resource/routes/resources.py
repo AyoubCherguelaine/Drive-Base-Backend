@@ -40,14 +40,14 @@ def list_user_access():
     else:
         abort(404,{"Not Implemented"})
         
-@resources_routes.route('/user/details/',methods=['GET','POST'])
+@resources_routes.route('/user/details/',methods=['GET'])
 def list_user_access_details():
     if request.method == 'GET':
         return ua_endpoint.get_list_details(None)
     else:
         abort(404,{"Not Implemented"})
     
-@resources_routes.route('/user/<int:id_user>/details/', methods=['GET','DELETE', 'PUT'] )
+@resources_routes.route('/user/<int:id_user>/details/', methods=['GET'] )
 def user_access_details(id_user):
     if request.method == 'GET':
         return ua_endpoint.get_details(id_user)
