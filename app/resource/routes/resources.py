@@ -41,20 +41,31 @@ def list_user_access():
     else:
         abort(404,{"Not Implemented"})
         
+@resources_routes.route('/user/details/',methods=['GET','POST'])
+def list_user_access_details():
+    if request.method == 'GET':
+        return ua_endpoint.get_list_details(None)
+    else:
+        abort(404,{"Not Implemented"})
+    
+@resources_routes.route('/user/<int:id_user>/details/', methods=['GET','DELETE', 'PUT'] )
+def user_access_details(id_user):
+    if request.method == 'GET':
+        return ua_endpoint.get_details(id_user)
+    else:
+        abort(404,{"Not Implemented"})
         
 @resources_routes.route('/user/<int:id_user>', methods=['GET','DELETE', 'PUT'] )
 def user_access(id_user):
-    
     if request.method == 'DELETE':
         return ua_endpoint.delete(id_user)
     elif request.method == 'PUT':
         data = request.json
         return ua_endpoint.update(id_user,data)
     elif request.method == 'GET':
-        return ua_endpoint.get(id)
+        return ua_endpoint.get(id_user)
     else:
         abort(404,{"Not Implemented"})
-        
         
 @resources_routes.route('/<int:id>/user/',methods=['GET','POST'])
 def list_user_access_by_resource(id):

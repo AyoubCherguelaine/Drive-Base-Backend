@@ -26,7 +26,12 @@ class endpoint(endpoint):
                 abort(500,e)
         else:
             abort(400 , {"message": "Invalid user_access data" })
-        
+    
+    @staticmethod
+    def get_list_details(query=None):
+        List_user_access = User_access_model.query.order_by(User_access_model.id).all()
+        user_access_list = [user_access.json_populate() for user_access in List_user_access]
+        return jsonify(user_access_list)  
     
     @staticmethod
     def get_list(query=None):
@@ -35,8 +40,13 @@ class endpoint(endpoint):
         return jsonify(user_access_list)   
 
     @staticmethod
+    def get_details(id: str):
+        user_access = User_access_model.query.first_or_404(id)
+        return jsonify(user_access.json_populate())
+
+    @staticmethod
     def get(id: str):
-        user_access = user_access.query.first_or_404(id)
+        user_access = User_access_model.query.first_or_404(id)
         return jsonify(user_access.json())
     
     @staticmethod
