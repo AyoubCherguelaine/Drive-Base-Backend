@@ -12,6 +12,9 @@ class folder(db.Model):
     resource = db.relationship("resource", lazy='joined', foreign_keys=[resource_id])
     parent_folder = db.relationship("folder", lazy='joined', foreign_keys=[parent_id])
 
+    #attr
+    data_keys = {"resource_id","parent_id"}
+    
     def __repr__(self) -> str:
         return "<folder %r" % self.id
     

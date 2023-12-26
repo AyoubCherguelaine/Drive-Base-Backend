@@ -8,7 +8,8 @@ class file(db.Model):
 
     object = db.relationship("object", lazy='joined', foreign_keys=[object_id])
     
-    
+    #attr
+    data_keys = {'object_id'}
     
     def __repr__(self) -> str:
         return "<file %r" % self.id

@@ -4,11 +4,10 @@ from flask import request, jsonify, abort
 from app.base.endpoint import endpoint
 
 class endpoint(endpoint):
-    body_data_keys =  {"name","description"}
- 
+    
     @staticmethod
     def create(data):
-        if endpoint.is_body_data_valide(data,endpoint.body_data_keys, create = True):
+        if endpoint.is_body_data_valide(data,Access.data_keys, create = True):
             access = Access(
                 name=data['name'],
                 description=data['description']
@@ -37,7 +36,7 @@ class endpoint(endpoint):
     @staticmethod
     def update(id: str,data):
         access = Access.query.first_or_404(id)
-        if endpoint.is_body_data_valide(data,endpoint.body_data_keys):
+        if endpoint.is_body_data_valide(data,Access.data_keys):
             for key in list(data.keys()):
                 setattr(access, key, data[key])
             try:
@@ -55,6 +54,6 @@ class endpoint(endpoint):
         try:
             db.session.delete(access)
             db.session.commit()
-            return {"result","Deleted"}
+            return {"result":"Deleted"}
         except Exception as e : 
-            abort(500,e.message)
+            abort(500,e)

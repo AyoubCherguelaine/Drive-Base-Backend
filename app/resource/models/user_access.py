@@ -15,6 +15,9 @@ class user_access(db.Model):
     user = db.relationship("User", lazy='joined', foreign_keys=[user_id])
     access = db.relationship("Access",lazy='joined', foreign_keys=[access_id])
     
+    #attr
+    data_keys = {'user_id','resource_id','access_id'}
+    
     def __repr__(self):
         return "<user_access %r>" % self.id
     

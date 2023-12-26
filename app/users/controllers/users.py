@@ -44,7 +44,7 @@ class endpoint(endpoint):
                 db.session.commit()
                 return jsonify(user.json())
             except Exception as e :
-                abort(500,e.message)
+                abort(500,e)
         else:
             abort(400,{"Invalid user data"})
 
@@ -54,6 +54,6 @@ class endpoint(endpoint):
         try:
             db.session.delete(user)
             db.session.commit()
-            return {"result":True}
+            return {"result":"Deleted"}
         except Exception as e : 
-            abort(500,e.message)
+            abort(500,e)

@@ -8,6 +8,8 @@ class Access(db.Model):
     name = db.Column(db.String(50))
     description = db.Column(db.String(200))
     
+    #attr
+    data_keys = {"name","description"}
     def __repr__(self):
         return "<access %r>" % self.id
     

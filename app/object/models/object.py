@@ -7,8 +7,11 @@ class object(db.Model):
     resource_id = db.Column(db.ForeignKey("resources.id"), nullable=False)
     path = db.Column(db.String(1000))
     
+    #relation
     resource = db.relationship("resource", lazy='joined', foreign_keys=[resource_id])
     
+    #attr
+    data_keys = {"resource_id","path"}
     
     def __repr__(self) -> str:
         return "<object %r" % self.id

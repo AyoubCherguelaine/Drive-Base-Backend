@@ -1,7 +1,7 @@
 
 
 class endpoint:
-    body_data_keys= {}
+    
     @staticmethod
     def is_body_data_valide(data,body_data_keys=None,create=False)->bool:
         if create and set(data.keys()) == body_data_keys:
