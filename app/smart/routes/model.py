@@ -5,6 +5,6 @@ from ..controllers.model import Model
 Model = Model()
 
 
-categories_routes = Blueprint('model', __name__)
+models_routes = Blueprint('model', __name__)
 
-routes = Routes(Model,categories_routes,DETAILS=False)
+routes = Routes(Model,models_routes,DETAILS=False)

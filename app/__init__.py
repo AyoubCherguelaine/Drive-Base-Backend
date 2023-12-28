@@ -23,6 +23,8 @@ def create_app(config_class=Config):
     from app.object.routes.folder import folder_routes
     # Smart Module
     from app.smart.routes.category import categories_routes
+    from app.smart.routes.model import models_routes
+    from app.smart.routes.summary import summary_routes
     
     app.register_blueprint(users_routes, url_prefix='/users')
     
@@ -36,6 +38,8 @@ def create_app(config_class=Config):
     app.register_blueprint(folder_routes, url_prefix='/folders')
         
     app.register_blueprint(categories_routes, url_prefix='/categories')
+    app.register_blueprint(models_routes, url_prefix='/models')
+    app.register_blueprint(summary_routes, url_prefix='/summaries')
     
     @app.route('/endpoint/', methods=['GET'])
     def endpoints():

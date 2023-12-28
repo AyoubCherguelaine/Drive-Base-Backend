@@ -7,8 +7,8 @@ class summary(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     summary = db.Column(db.String())
-    file_id = db.Column(db.ForeignKey("file.id"), nullable=False)
-    model_id = db.Column(db.ForeignKey("model.id"), nullable=False)
+    file_id = db.Column(db.ForeignKey("files.id"), nullable=False)
+    model_id = db.Column(db.ForeignKey("models.id"), nullable=False)
     date = db.Column(db.DateTime(),default=datetime.utcnow)
     
     file = db.relationship("file", lazy='joined', foreign_keys=[file_id])

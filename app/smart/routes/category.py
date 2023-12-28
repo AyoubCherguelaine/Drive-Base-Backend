@@ -6,4 +6,4 @@ Category = Category()
 
 categories_routes = Blueprint('category', __name__)
 
-routes = Routes(Category,categories_routes,DETAILS=False)
+routes = Routes(Category,categories_routes,DETAILS=True)
