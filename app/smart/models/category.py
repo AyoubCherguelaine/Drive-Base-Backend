@@ -7,7 +7,6 @@ class category(db.Model):
     description = db.Column(db.String(500))
     
     
-    
     data_keys = {'label','description'}
     
     def __repr__(self) -> str:

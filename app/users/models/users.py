@@ -13,6 +13,13 @@ class User(db.Model):
     active = db.Column(db.Boolean,default=0)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
+    data_keys = {'firstname',
+                 'lastname',
+                 'username',
+                 'email',
+                 'password',
+                 'active'}
+    
     def __repr__(self):
         return "<user %r>" % self.id
     

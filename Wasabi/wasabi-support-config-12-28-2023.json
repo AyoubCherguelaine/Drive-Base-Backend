@@ -1,0 +1,56 @@
+{
+  "accessKeys": [
+    {
+      "CreateDate": "2023-12-28T17:15:10.000Z",
+      "AccessKeyId": "JJ8RQUMU4JLPQWT8YWWX",
+      "SecretAccessKey": "araunfBud6PDzXw8iy48u5cSIDLjGgDIXWZTDIYI",
+      "Status": "Active",
+      "UserName": ""
+    }
+  ],
+  "buckets": [
+    {
+      "Name": "drive.app",
+      "CreationDate": "2023-12-28T17:21:07.000Z",
+      "Region": "eu-west-2",
+      "PublicAccess": "Default",
+      "Owner": "cherguelainea",
+      "Type": "bucket",
+      "OwnerId": "AA46645641CB4DDEFD085939EA27EE94E15546A8A27FEECB15034DAEC6C292CF",
+      "Logging": {
+        "LoggingEnabled": {
+          "TargetBucket": "drive.app",
+          "TargetGrants": [],
+          "TargetPrefix": "drive"
+        }
+      },
+      "Versioning": {
+        "Status": "Enabled",
+        "MFADelete": "Disabled"
+      },
+      "Compliance": {
+        "Status": "disabled"
+      },
+      "Acls": {
+        "Owner": {
+          "DisplayName": "cherguelainea",
+          "ID": "AA46645641CB4DDEFD085939EA27EE94E15546A8A27FEECB15034DAEC6C292CF"
+        },
+        "Grants": [
+          {
+            "Grantee": {
+              "DisplayName": "cherguelainea",
+              "ID": "AA46645641CB4DDEFD085939EA27EE94E15546A8A27FEECB15034DAEC6C292CF",
+              "Type": "CanonicalUser"
+            },
+            "Permission": "FULL_CONTROL"
+          }
+        ]
+      }
+    }
+  ],
+  "groups": [],
+  "policies": [],
+  "roles": [],
+  "users": []
+}

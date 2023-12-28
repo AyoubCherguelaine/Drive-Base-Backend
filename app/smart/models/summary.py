@@ -12,7 +12,7 @@ class summary(db.Model):
     date = db.Column(db.DateTime(),default=datetime.utcnow)
     
     file = db.relationship("file", lazy='joined', foreign_keys=[file_id])
-    model = db.relationship("file", lazy='joined', foreign_keys=[model_id])
+    model = db.relationship("model", lazy='joined', foreign_keys=[model_id])
     #attr
     data_keys = {'summary','file_id','model_id','date'}
     

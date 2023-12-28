@@ -16,9 +16,9 @@ class endpoint:
                 setattr(self, f"{attr_name}_{suffix}", attr)
         
     def __is_body_data_valide(self, data, create=True):
-        if create and set(data.keys()) == self.model.body_data_keys:
+        if create and set(data.keys()) == self.model.data_keys:
             return True
-        elif not create and set(data.keys()) & self.model.body_data_keys:
+        elif not create and set(data.keys()) & self.model.data_keys:
             return True
         else:
             return False
@@ -30,7 +30,7 @@ class endpoint:
             try:
                 db.session.add(model)
                 db.session.commit()  
-                
+                return jsonify(model.json())
             except Exception as e :
                 abort(500,e)
         else:
@@ -42,12 +42,12 @@ class endpoint:
         return jsonify(models_json)
     
     def get(self, id):
-        model = self.model.query.first_or_404(id)
+        model = self.model.query.get_or_404(id)
         return jsonify(model.json()) 
     
     def update(self, id):
         data = request.json
-        model = self.model.query.first_or_404(id)
+        model = self.model.query.get_or_404(id)
         if self.__is_body_data_valide(data):
             for key in list(data.keys()):
                 setattr(model, key, data[key])
@@ -60,7 +60,7 @@ class endpoint:
             abort(400,{"Invalid % data" % self.model_name})
     
     def delete(self, id):
-        model = self.model.query.first_or_404(id)
+        model = self.model.query.get_or_404(id)
         try:
             db.session.delete(model)
             db.session.commit()
@@ -80,7 +80,7 @@ class endpoint:
         if not self.details:
             return False
         
-        model = self.model.query.first_or_404(id)
+        model = self.model.query.get_or_404(id)
         return jsonify(model.json_populate())
     
     @staticmethod
