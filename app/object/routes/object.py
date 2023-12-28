@@ -1,38 +1,9 @@
-from flask import Flask, request, jsonify, abort,Blueprint
-from ..controllers.object import endpoint
+from flask import Flask,Blueprint
+from ..controllers.object import Object
+from app.base.routes import Routes
+
+Object = Object()
 
 object_routes = Blueprint('object', __name__)
 
-@object_routes.route('/',methods=['GET','POST'])
-def list_object():
-    if request.method == 'POST':
-        data = request.json
-        return endpoint.create(data)
-    elif request.method == 'GET':
-        return endpoint.get_list(None)
-    
-@object_routes.route('/<int:id>', methods=['GET','DELETE', 'PUT'] )
-def access(id):
-    if request.method == 'DELETE':
-        return endpoint.delete(id)
-    elif request.method == 'PUT':
-        data = request.json
-        return endpoint.update(id,data)
-    elif request.method == 'GET':
-        return endpoint.get(id)
-    else:
-        abort(404,{"Not Implemented"})
-        
-@object_routes.route('/details/',methods=['GET'])
-def list_user_access_details():
-    if request.method == 'GET':
-        return endpoint.get_list_details(None)
-    else:
-        abort(404,{"Not Implemented"})
-        
-@object_routes.route('<int:id>/details/', methods=['GET'] )
-def user_access_details(id):
-    if request.method == 'GET':
-        return endpoint.get_details(id)
-    else:
-        abort(404,{"Not Implemented"})
+routes = Routes(Object,object_routes,DETAILS=True)

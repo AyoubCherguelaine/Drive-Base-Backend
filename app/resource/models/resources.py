@@ -1,12 +1,10 @@
-import json
 from app import db
-from datetime import datetime
 
 class resource(db.Model):
     __tablename__ = "resources"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50) )
-    description = db.Column(db.String(200) )
+    description = db.Column(db.String(500) )
     
     #attr
     data_keys = {"name","description"}

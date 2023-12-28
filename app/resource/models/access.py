@@ -6,7 +6,7 @@ class Access(db.Model):
     __tablename__ = "access"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
-    description = db.Column(db.String(200))
+    description = db.Column(db.String(500))
     
     #attr
     data_keys = {"name","description"}
