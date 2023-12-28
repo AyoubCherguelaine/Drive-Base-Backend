@@ -1,3 +1,4 @@
+from datetime import datetime
 from app import db
 
 
@@ -8,7 +9,7 @@ class summary(db.Model):
     summary = db.Column(db.String())
     file_id = db.Column(db.ForeignKey("file.id"), nullable=False)
     model_id = db.Column(db.ForeignKey("model.id"), nullable=False)
-    date = db.Column(db.Datetime())
+    date = db.Column(db.DateTime(),default=datetime.utcnow)
     
     file = db.relationship("file", lazy='joined', foreign_keys=[file_id])
     model = db.relationship("file", lazy='joined', foreign_keys=[model_id])
