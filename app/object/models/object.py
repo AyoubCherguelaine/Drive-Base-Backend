@@ -6,6 +6,7 @@ class object(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     resource_id = db.Column(db.ForeignKey("resources.id"), nullable=False)
     path = db.Column(db.String(1000))
+
     
     #relation
     resource = db.relationship("resource", lazy='joined', foreign_keys=[resource_id])
