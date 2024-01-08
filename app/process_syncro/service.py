@@ -9,6 +9,7 @@ class service:
         
     def process(self):
         data = request.json
+        
         return "finish"
     
     def async_process(self):
