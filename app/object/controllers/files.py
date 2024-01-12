@@ -6,3 +6,8 @@ class File(endpoint):
     def __init__(self ):
         super().__init__(file_model, 'file', True)
 
+    def upload_file():
+        pass
+    
+    def download_file():
+        pass
