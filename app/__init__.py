@@ -25,6 +25,8 @@ def create_app(config_class=Config):
     from app.smart.routes.category import categories_routes
     from app.smart.routes.model import models_routes
     from app.smart.routes.summary import summary_routes
+    # object storage
+    from app.object_storage_system.routes.buckets import bucket_routes
     
     app.register_blueprint(users_routes, url_prefix='/users')
     
@@ -41,9 +43,11 @@ def create_app(config_class=Config):
     app.register_blueprint(models_routes, url_prefix='/models')
     app.register_blueprint(summary_routes, url_prefix='/summaries')
     
+    app.register_blueprint(bucket_routes,url_prefix='/buckets')
+    
     @app.route('/endpoint/', methods=['GET'])
     def endpoints():
-        r= [{"endpoint":rule.rule,"methods":list(rule.methods)} for rule in app.url_map.iter_rules()]
-        return r
+        return [{"endpoint":rule.rule,"methods":list(rule.methods)} for rule in app.url_map.iter_rules()]
+
 
     return app
