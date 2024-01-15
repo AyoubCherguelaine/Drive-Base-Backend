@@ -64,7 +64,7 @@ class endpoint:
         try:
             db.session.delete(model)
             db.session.commit()
-            return {"result":"Deleted % " % model}
+            return {"result":f"Deleted {model.id} "}
         except Exception as e : 
             abort(500,e)
             

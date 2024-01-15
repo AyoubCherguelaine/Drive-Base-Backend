@@ -11,7 +11,7 @@ class object(db.Model):
     #relation
     resource = db.relationship("resource", lazy='joined', foreign_keys=[resource_id])
     bucket = db.relationship("bucket", lazy='joined', foreign_keys=[bucket_id])
-    #attr
+    #attr object
     data_keys = {"resource_id","path",'bucket_id'}
     
     def __repr__(self) -> str:

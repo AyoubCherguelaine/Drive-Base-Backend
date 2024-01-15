@@ -47,7 +47,7 @@ def create_app(config_class=Config):
     
     @app.route('/endpoint/', methods=['GET'])
     def endpoints():
-        return [{"endpoint":rule.rule,"methods":list(rule.methods)} for rule in app.url_map.iter_rules()]
-
+        endpoints = [{"endpoint": rule.rule, "methods": [method for method in rule.methods if method in ['POST', 'GET', 'DELETE', 'PUT']]} for rule in app.url_map.iter_rules()]
+        return endpoints
 
     return app
