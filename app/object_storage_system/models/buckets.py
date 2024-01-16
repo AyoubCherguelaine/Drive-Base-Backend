@@ -29,3 +29,6 @@ class bucket(db.Model):
         path = os.path.join(self.local_path, filename)
         file.save(path)
         return path
+    
+    def list_files_in_bucket(self):
+        pass
