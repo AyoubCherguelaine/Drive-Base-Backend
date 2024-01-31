@@ -3,6 +3,8 @@ from app.base.endpoint import endpoint
 
 class Routes:
     
+    
+    
     def __init__(self, endpoint:endpoint , routes:Blueprint, DETAILS=False, base_route=""):
         self.endpoint = endpoint
         self.routes = routes

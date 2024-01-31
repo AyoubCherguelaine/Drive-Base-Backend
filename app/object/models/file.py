@@ -9,7 +9,6 @@ class file(db.Model):
     size_of_file = db.Column(db.Float)
     
     
-
     object = db.relationship("object", lazy='joined', foreign_keys=[object_id])
     
     #attr

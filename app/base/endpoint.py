@@ -1,6 +1,8 @@
 
 from app import db
 from flask import request, jsonify, abort
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+
 
 class endpoint:
     def __init__(self,model, model_name,details=False):
@@ -22,6 +24,26 @@ class endpoint:
             return True
         else:
             return False
+    
+    def __Generate_token(self,id,username,email):
+        data = {
+            'id':id,
+            'username':username,
+            'email':email
+        }
+        access_token = create_access_token(identity=data)
+        return jsonify(access_token=access_token)
+    
+    
+    def __get_user_data(self):
+        identity = get_jwt_identity()
+
+        # Assuming the identity is a dictionary with 'id' and 'username' keys
+        user_id = identity.get('id')
+        username = identity.get('username')
+        email = identity.get('email')
+        
+        return {'user_id': user_id, 'username': username , 'email':email}
     
     def create(self):
         data = request.json

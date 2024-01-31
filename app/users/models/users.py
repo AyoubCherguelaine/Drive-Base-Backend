@@ -37,4 +37,6 @@ class User(db.Model):
             "email": self.email
         }
     
+    def check_password(self, password):
+        return self.password == password
     
