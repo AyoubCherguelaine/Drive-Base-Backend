@@ -10,10 +10,11 @@ users_routes = Blueprint('user', __name__)
 
 class routers(Routes):
     def __init__(self,endpoint,routes,DETAILS=False):
-        super.__init__(endpoint,routes,DETAILS)
+        super().__init__(endpoint,routes,DETAILS)
+        self.auth()
     
     def auth(self):
         get_list_function = endpoint.get_endpoint(self.endpoint,f"login_{self.endpoint.model_name}")
-        self.routes.route(f'{self.base_route}/',methods=["POST"])(get_list_function)
+        self.routes.route(f'{self.base_route}/login',methods=["POST"])(get_list_function)
         
 routes = routers(User,users_routes,DETAILS=False)
