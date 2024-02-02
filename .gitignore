@@ -2,3 +2,4 @@ venv
 *.pyc
 Wasabi
 __pycache__/
+*.cpython-310*
