@@ -14,7 +14,7 @@ class routers(Routes):
         self.auth()
     
     def auth(self):
-        get_list_function = endpoint.get_endpoint(self.endpoint,f"login_{self.endpoint.model_name}")
-        self.routes.route(f'{self.base_route}/login',methods=["POST"])(get_list_function)
-        
+        self.generate_route("login",methods=['POST'],parameter='login',authorize=False)
+        self.generate_route("check_token",methods=['GET'],parameter='check',authorize=True)
+
 routes = routers(User,users_routes,DETAILS=False)

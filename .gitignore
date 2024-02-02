@@ -3,3 +3,4 @@ venv
 Wasabi
 __pycache__/
 *.cpython-310*
+local_workspace

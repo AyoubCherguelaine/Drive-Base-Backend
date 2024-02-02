@@ -26,7 +26,7 @@ class Routes:
 
         endpoint_function = endpoint.get_endpoint(self.endpoint, function_name)
         if authorize:
-            endpoint_function = jwt_required(endpoint_function)
+            endpoint_function = jwt_required()(endpoint_function)
 
         if parameter:
             route_path += f'/{parameter}'

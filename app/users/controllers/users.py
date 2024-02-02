@@ -18,10 +18,16 @@ class User(endpoint):
         # Use get_or_404 to simplify model retrieval
         model = self.model.get_user_model_by_email(data['email'])
         
-    # Check password and generate token
+        # Check password and generate token
         if model.check_password(data['password']):
             return self._Generate_token(model.id, model.username, model.email)
         else:
             return abort(403, {"Error": "Access Denied"})
         
+    def check_token(self):
+        try:
+            user_data = self._get_user_data()
+            return jsonify(user_data)
+        except :
+            return abort(404)
     
