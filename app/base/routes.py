@@ -1,53 +1,34 @@
-from flask import Flask, request, jsonify, abort,Blueprint
+from flask import Blueprint
+from flask_jwt_extended import jwt_required
 from app.base.endpoint import endpoint
 
 class Routes:
-    
-    
-    
-    def __init__(self, endpoint:endpoint , routes:Blueprint, DETAILS=False, base_route=""):
+    def __init__(self, endpoint: endpoint, routes: Blueprint, DETAILS=False, base_route="", authorize=False):
         self.endpoint = endpoint
         self.routes = routes
         self.base_route = base_route
-        self.generate_routes_getter()
-        self.generate_routes_post()
-        self.generate_routes_put()
-        self.generate_routes_delete()
+        self.init_endpoints(DETAILS, authorize)
+
+    def init_endpoints(self, DETAILS=False, authorize=False):
+        self.generate_route("get_list", methods=["GET"], authorize=authorize)
+        self.generate_route("get", methods=["GET"], parameter="<int:id>", authorize=authorize)
+        self.generate_route("create", methods=["POST"])
+        self.generate_route("update", methods=["PUT"], parameter="<int:id>")
+        self.generate_route("delete", methods=["DELETE"], parameter="<int:id>")
+
         if DETAILS:
-            self.generate_route_details()
-        
-    def generate_routes_getter(self):  # sourcery skip: extract-duplicate-method
-        
-        get_list_function = endpoint.get_endpoint(self.endpoint,f"get_list_{self.endpoint.model_name}")
-        self.routes.route(f'{self.base_route}/',methods=["GET"])(get_list_function)
-        
-        get_function = endpoint.get_endpoint(self.endpoint,f"get_{self.endpoint.model_name}")
-        self.routes.route(f'{self.base_route}/<int:id>',methods=["GET"])(get_function)
+            self.generate_route("get_list_details", methods=["GET"], subroute="/details/")
+            self.generate_route("get_details", methods=["GET"], parameter="<int:id>", subroute="/details/")
 
-        
-    
-    def generate_routes_post(self):
-        
-        create_function = endpoint.get_endpoint(self.endpoint,f"create_{self.endpoint.model_name}")
-        self.routes.route(f'{self.base_route}/',methods=["POST"])(create_function)
-        
-    def generate_routes_put(self):
-        
-        update_function = endpoint.get_endpoint(self.endpoint,f"update_{self.endpoint.model_name}")
-        self.routes.route(f'{self.base_route}/<int:id>',methods=["PUT"])(update_function)
- 
-    
-    def generate_routes_delete(self):
-        
-        delete_function = endpoint.get_endpoint(self.endpoint,f"delete_{self.endpoint.model_name}") 
-        self.routes.route(f'{self.base_route}/<int:id>',methods=["DELETE"])(delete_function)
+    def generate_route(self, action, methods, parameter=None, subroute="", authorize=False):
+        function_name = f"{action}_{self.endpoint.model_name}"
+        route_path = f'{self.base_route}/{subroute}' if subroute else f'{self.base_route}/'
 
-    
-    def generate_route_details(self):
-        
-        get_list_details_function = endpoint.get_endpoint(self.endpoint,f"get_list_details_{self.endpoint.model_name}")
-        self.routes.route(f'{self.base_route}/details/',methods=["GET"])(get_list_details_function)
-        
-        get_details_function = endpoint.get_endpoint(self.endpoint,f"get_details_{self.endpoint.model_name}")
-        self.routes.route(f'{self.base_route}/<int:id>/details/',methods=["GET"])(get_details_function)
-        
+        endpoint_function = endpoint.get_endpoint(self.endpoint, function_name)
+        if authorize:
+            endpoint_function = jwt_required(endpoint_function)
+
+        if parameter:
+            route_path += f'/{parameter}'
+            
+        self.routes.route(route_path, methods=methods)(endpoint_function)

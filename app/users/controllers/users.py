@@ -12,14 +12,16 @@ class User(endpoint):
         data = request.json
 
         # Guard clause for invalid data
-        if not self.__is_body_data_valide(data):
+        if not self._is_body_data_valide(data,create=False):
             return abort(404, {"Error": "Data Not Valid"})
 
         # Use get_or_404 to simplify model retrieval
-        model = self.model.query.get_or_404(data.email)
-
-        # Check password and generate token
-        if model.check_password(data.password):
-            return self.__Generate_token(model.id, model.username, model.email)
+        model = self.model.get_user_model_by_email(data['email'])
+        
+    # Check password and generate token
+        if model.check_password(data['password']):
+            return self._Generate_token(model.id, model.username, model.email)
         else:
             return abort(403, {"Error": "Access Denied"})
+        
+    

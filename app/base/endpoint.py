@@ -9,15 +9,15 @@ class endpoint:
         self.model = model
         self.model_name = model_name
         self.details = details
-        self.__rename_functions(model_name)
+        self._rename_functions(model_name)
         
-    def __rename_functions(self, suffix):
+    def _rename_functions(self, suffix):
         for attr_name in dir(self):
             attr = getattr(self, attr_name)
             if callable(attr) and hasattr(attr, '__call__') and not attr_name.startswith("__"):
                 setattr(self, f"{attr_name}_{suffix}", attr)
         
-    def __is_body_data_valide(self, data, create=True):
+    def _is_body_data_valide(self, data, create=True):
         if create and set(data.keys()) == self.model.data_keys:
             return True
         elif not create and set(data.keys()) & self.model.data_keys:
@@ -25,7 +25,7 @@ class endpoint:
         else:
             return False
     
-    def __Generate_token(self,id,username,email):
+    def _Generate_token(self,id,username,email):
         data = {
             'id':id,
             'username':username,
@@ -35,7 +35,7 @@ class endpoint:
         return jsonify(access_token=access_token)
     
     
-    def __get_user_data(self):
+    def _get_user_data(self):
         identity = get_jwt_identity()
 
         # Assuming the identity is a dictionary with 'id' and 'username' keys
@@ -47,7 +47,7 @@ class endpoint:
     
     def create(self):
         data = request.json
-        if self.__is_body_data_valide(data,create=True):
+        if self._is_body_data_valide(data,create=True):
             model = self.model(**data)
             try:
                 db.session.add(model)
@@ -70,7 +70,7 @@ class endpoint:
     def update(self, id):
         data = request.json
         model = self.model.query.get_or_404(id)
-        if self.__is_body_data_valide(data):
+        if self._is_body_data_valide(data):
             for key in list(data.keys()):
                 setattr(model, key, data[key])
             try:

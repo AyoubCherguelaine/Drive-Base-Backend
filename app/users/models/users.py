@@ -40,3 +40,9 @@ class User(db.Model):
     def check_password(self, password):
         return self.password == password
     
+    @staticmethod
+    def get_user_model_by_email(email):
+        search_dict = {'email': email}
+        return User.query.filter_by(**search_dict).first()
+
+    
