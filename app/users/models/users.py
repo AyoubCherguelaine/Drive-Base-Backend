@@ -2,6 +2,9 @@ import json
 from app import db
 from datetime import datetime
 
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+
+
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
@@ -45,4 +48,15 @@ class User(db.Model):
         search_dict = {'email': email}
         return User.query.filter_by(**search_dict).first()
 
+    @staticmethod
+    def get_user_from_token():
+        identity = get_jwt_identity()
+        user_id = identity.get('id')
+        username = identity.get('username')
+        email = identity.get('email')
+        
+        search_dict = {'id':user_id,'username':username,'email': email}
+        
+        return User.query.filter_by(**search_dict).first()
+    
     

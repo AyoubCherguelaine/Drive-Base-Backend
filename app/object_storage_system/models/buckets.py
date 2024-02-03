@@ -2,6 +2,8 @@ from app import db
 from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
+
+from app.object.models.object import object
 class bucket(db.Model):
     __tablename__ = "buckets"
     id = db.Column(db.Integer, primary_key=True)
@@ -24,11 +26,16 @@ class bucket(db.Model):
     def create_bucket(self):
         os.makedirs(self.local_path, exist_ok=True)
         
-    def save_file_in_bucket(self, file):
-        filename = secure_filename(file.filename)
+    def save_file_in_bucket(self, file,object:object):
+        filename = f'{object.file_name}.{object.file_extension}'
         path = os.path.join(self.local_path, filename)
         file.save(path)
         return path
     
     def list_files_in_bucket(self):
         pass
+    
+    @staticmethod
+    def get_bucket_by_name(name):
+        search_dict = {'name': name}
+        return bucket.query.filter_by(**search_dict).first()

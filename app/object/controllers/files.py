@@ -5,22 +5,25 @@ from ..models.file import file as file_model
 from flask import Flask, request, send_file
 import os
 
+
+
+from app.users.models.users import User
+
 class File(endpoint):
     def __init__(self ):
         super().__init__(file_model, 'file', True)
 
     def upload_file():
+        user = User.get_user_from_token()
         if 'file' not in request.files:
             return 'No file part'
 
-        file = request.files['file']
+        uploaded_file = request.files['file']
 
-        if file.filename == '':
+        if uploaded_file.filename == '':
             return 'No selected file'
-
-        # Save the file to a desired location
-        file.save('uploads/' + file.filename)
-
+        
+        state = file_model.upload_file(uploaded_file,user)
         return 'File uploaded successfully'
     
     def download_file(filename):

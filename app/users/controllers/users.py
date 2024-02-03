@@ -26,8 +26,8 @@ class User(endpoint):
         
     def check_token(self):
         try:
-            user_data = self._get_user_data()
-            return jsonify(user_data)
+            user_data = user_model.get_user_from_token() #self._get_user_data()
+            return jsonify(user_data.json())
         except :
             return abort(404)
     

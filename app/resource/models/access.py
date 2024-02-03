@@ -22,3 +22,8 @@ class Access(db.Model):
             "name": self.name,
             "description": self.description
         }
+        
+    @staticmethod
+    def get_access_by_name(name):
+        search_dict = {'name': name}
+        return Access.query.filter_by(**search_dict).first()
