@@ -25,7 +25,7 @@ class object(db.Model):
             "resource": self.resource.json(),
             "file_name": self.file_name,
             "file_extension": self.file_extension,
-            'bucket':self.bucket
+            'bucket':self.bucket.json()
         }
     
     def json(self):

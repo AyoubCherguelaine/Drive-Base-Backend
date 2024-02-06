@@ -17,8 +17,8 @@ class Routes:
         self.generate_route("delete", methods=["DELETE"], parameter="<int:id>")
 
         if DETAILS:
-            self.generate_route("get_list_details", methods=["GET"], subroute="/details/")
-            self.generate_route("get_details", methods=["GET"], parameter="<int:id>", subroute="/details/")
+            self.generate_route("get_list_details", methods=["GET"], subroute="/details")
+            self.generate_route("get_details", methods=["GET"], parameter="<int:id>", subroute="/details")
 
     def generate_route(self, action, methods, parameter=None, subroute="", authorize=False):
         function_name = f"{action}_{self.endpoint.model_name}"

@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 from app.object.models.object import object
 class bucket(db.Model):
     __tablename__ = "buckets"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(300))
     local_path = db.Column(db.String(800))
     

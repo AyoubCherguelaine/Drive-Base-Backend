@@ -1,7 +1,6 @@
 import json
 from app import db
 from datetime import datetime
-
 class Access(db.Model):
     __tablename__ = "access"
     id = db.Column(db.Integer, primary_key=True)
@@ -27,3 +26,4 @@ class Access(db.Model):
     def get_access_by_name(name):
         search_dict = {'name': name}
         return Access.query.filter_by(**search_dict).first()
+
